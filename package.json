@@ -6,23 +6,24 @@
   "license": "ISC",
   "private": true,
   "main": "server/src/main.js",
-   "scripts": {
+  "scripts": {
     "install:all": "npm install && cd server && npm install",
     "dev": "concurrently \"vite\" \"cd server && npm run dev\"",
-    "build": "vite build && cd server && npm run build",
+    "build": "npx vite build && cd server && npm run build",
     "start": "cd server && electron .",
     "pack:win": "cd server && electron-builder --win --x64"
-  } ,
+  },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "electron": "28",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "vite": "^5.0.0"
   },
   "build": {
     "appId": "com.dascom.paiegracededieu",
     "productName": "PaieGraceDeDieu",
     "files": [
-      "frontend/dist/**/*",
+      "dist/**/*",
       "server/**/*",
       "package.json"
     ],
