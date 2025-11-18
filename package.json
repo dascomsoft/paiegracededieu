@@ -6,13 +6,13 @@
   "license": "ISC",
   "private": true,
   "main": "server/src/main.js",
-  "scripts": {
-    "install:all": "npm --prefix frontend install && npm --prefix server install",
-    "dev": "concurrently \"npm --prefix frontend run dev\" \"npm --prefix server run dev\"",
-    "build": "npm --prefix frontend run build && npm --prefix server run build",
-    "start": "electron .",
-    "pack:win": "electron-builder --win --x64"
-  },
+   "scripts": {
+    "install:all": "npm install && cd server && npm install",
+    "dev": "concurrently \"vite\" \"cd server && npm run dev\"",
+    "build": "vite build && cd server && npm run build",
+    "start": "cd server && electron .",
+    "pack:win": "cd server && electron-builder --win --x64"
+  } ,
   "devDependencies": {
     "concurrently": "^8.2.2",
     "electron": "28",
