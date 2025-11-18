@@ -1,0 +1,37 @@
+{
+  "name": "paiegracededieu",
+  "version": "1.0.0",
+  "description": "Application de gestion de scolarité avec React, Tailwind, Electron et SQLite",
+  "author": "Dascom",
+  "license": "ISC",
+  "private": true,
+  "main": "server/src/main.js",
+  "scripts": {
+    "install:all": "npm --prefix frontend install && npm --prefix server install",
+    "dev": "concurrently \"npm --prefix frontend run dev\" \"npm --prefix server run dev\"",
+    "build": "npm --prefix frontend run build && npm --prefix server run build",
+    "start": "electron .",
+    "pack:win": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "28",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.dascom.paiegracededieu",
+    "productName": "PaieGraceDeDieu",
+    "files": [
+      "frontend/dist/**/*",
+      "server/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    }
+  }
+}

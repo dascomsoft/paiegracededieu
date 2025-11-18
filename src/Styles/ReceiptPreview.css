@@ -1,0 +1,503 @@
+/* Variables CSS pour l'impression */
+:root {
+  --primary: #000000;
+  --text-dark: #000000;
+  --text-gray: #333333;
+  --border: #000000;
+  --bg-header: #f0f0f0;
+}
+
+/* Container principal - OPTIMISÉ POUR A4 */
+.receipt-container {
+  background: white;
+  padding: 0.5cm;
+  max-width: 21cm; /* Largeur A4 */
+  min-height: 22.7cm; /* Hauteur A4 */
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 1.2;
+  color: var(--text-dark);
+  font-size: 15pt;
+}
+
+/* Cacher les éléments non essentiels à l'écran */
+@media screen {
+  .print-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .print-button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+/* État d'erreur */
+.receipt-error {
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-content {
+  color: #ff0000;
+}
+
+.error-detail {
+  font-size: 9pt;
+  margin-top: 0.25rem;
+}
+
+/* En-tête du reçu - COMPRESSÉ */
+.receipt-header {
+  text-align: center;
+  margin-bottom: 0.3cm;
+  padding-bottom: 0.2cm;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-title {
+  font-size: 12pt;
+  font-weight: bold;
+  margin-bottom: 0.1cm;
+  text-transform: uppercase;
+}
+
+.header-subtitle {
+  font-size: 9pt;
+  font-weight: bold;
+  margin-bottom: 0.05cm;
+}
+
+.header-detail {
+  font-size: 8pt;
+  margin-bottom: 0.02cm;
+}
+
+/* Section titre - COMPRESSÉ */
+.receipt-title-section {
+  text-align: center;
+  margin: 0.3cm 0;
+  padding: 0.2cm 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.school-title {
+  font-size: 11pt;
+  font-weight: bold;
+  margin-bottom: 0.1cm;
+}
+
+.receipt-title {
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+/* Informations étudiant - COMPRESSÉ */
+.student-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.2cm;
+  margin-bottom: 0.3cm;
+  padding: 0.2cm;
+  border: 1px solid var(--border);
+  font-size: 9pt;
+}
+
+@media (min-width: 768px) {
+  .student-info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.student-info-left,
+.student-info-center,
+.student-info-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1cm;
+}
+
+.student-info-center {
+  text-align: center;
+}
+
+.student-info-right {
+  text-align: right;
+}
+
+.student-name {
+  font-weight: bold;
+}
+
+.amount-info {
+  font-weight: bold;
+}
+
+.receipt-number {
+  font-weight: bold;
+}
+
+/* Détails étudiant - COMPRESSÉ */
+.student-details {
+  margin-bottom: 0.3cm;
+  padding: 0.15cm;
+  border: 1px solid var(--border);
+  font-size: 8pt;
+}
+
+.detail-item {
+  margin-bottom: 0.1cm;
+}
+
+.detail-value {
+  font-weight: bold;
+}
+
+/* Détails de paiement - COMPRESSÉ */
+.payment-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  margin-bottom: 0.3cm;
+  
+}
+
+.payment-title {
+  font-size: 10pt;
+  font-weight: bold;
+  margin-bottom: 0.2cm;
+  text-align: center;
+}
+
+/* Message important */
+.font-extrabold {
+  font-weight: 900 !important;
+}
+
+.text-lg {
+  font-size: 9pt !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+/* Tableau - OPTIMISÉ POUR L'ESPACE */
+.table-container {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-top: 0.2cm;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8pt;
+  line-height: 1;
+}
+
+/* En-têtes de colonnes */
+.table-header {
+  background: var(--bg-header) !important;
+}
+
+.table-head {
+  padding: 0.15cm 0.2cm;
+  font-weight: bold;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.amount-head,
+.paid-head,
+.remaining-head {
+  text-align: right;
+}
+
+/* Corps du tableau */
+.table-body {
+  background-color: white;
+}
+
+.table-row {
+  border-bottom: 1px solid var(--border);
+}
+
+/* Cellules du tableau */
+.table-cell {
+  padding: 0.1cm 0.2cm;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.tariff-cell {
+  font-weight: 500;
+  text-align: left;
+}
+
+.amount-cell,
+.paid-cell,
+.remaining-cell {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+}
+
+/* Ligne des totaux */
+.table-total-row {
+  background: var(--bg-header) !important;
+  font-weight: bold;
+  border-top: 2px solid var(--border);
+}
+
+.total-cell {
+  text-align: left;
+}
+
+.total-amount-cell,
+.total-paid-cell,
+.total-remaining-cell {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
+
+/* Pied de page du reçu - COMPRESSÉ */
+.receipt-footer {
+  text-align: center;
+  font-size: 7pt;
+  border-top: 1px solid var(--border);
+  padding-top: 0.2cm;
+  margin-top: 0.3cm;
+  line-height: 1.1;
+}
+
+.receipt-footer p {
+  margin-bottom: 0.1cm;
+}
+
+.print-date {
+  margin-top: 0.15cm;
+  font-weight: bold;
+}
+
+/* STYLES D'IMPRESSION CRITIQUES */
+@media print {
+  /* Reset des marges du navigateur */
+  @page {
+    margin: 0.5cm;
+    size: A4;
+  }
+  
+  /* Masquer les éléments non nécessaires */
+  .print-actions {
+    display: none !important;
+  }
+  
+  /* Forcer les couleurs pour l'impression */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: white !important;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Optimisation générale */
+  .receipt-container {
+    padding: 0.5cm;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    max-width: none;
+    min-height: auto;
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+  
+  /* Réduire encore les espacements pour l'impression */
+  .receipt-header {
+    margin-bottom: 0.2cm;
+    padding-bottom: 0.1cm;
+  }
+  
+  .receipt-title-section {
+    margin: 0.2cm 0;
+    padding: 0.1cm 0;
+  }
+  
+  .student-info-grid {
+    margin-bottom: 0.2cm;
+    padding: 0.1cm;
+  }
+  
+  .student-details {
+    margin-bottom: 0.2cm;
+    padding: 0.1cm;
+  }
+  
+  .payment-details {
+    margin-bottom: 0.2cm;
+  }
+  
+  .receipt-footer {
+    margin-top: 0.2cm;
+    padding-top: 0.1cm;
+  }
+  
+  /* Assurer la lisibilité */
+  .table-header {
+    background: #f0f0f0 !important;
+  }
+  
+  .table-total-row {
+    background: #f0f0f0 !important;
+  }
+  
+  /* Éviter les coupures de page dans le tableau */
+  .payment-table {
+    page-break-inside: avoid;
+  }
+  
+  .table-row {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+}
+
+/* Responsive pour l'écran - version compacte */
+@media screen and (max-width: 768px) {
+  .receipt-container {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    font-size: 9pt;
+  }
+  
+  .student-info-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .student-info-center {
+    text-align: left;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+  
+  .student-info-right {
+    text-align: left;
+  }
+  
+  .table-head {
+    padding: 0.2rem;
+    font-size: 7pt;
+  }
+  
+  .table-cell {
+    padding: 0.2rem;
+    font-size: 7pt;
+  }
+}
+
+/* Optimisations supplémentaires pour économiser l'espace */
+.receipt-container * {
+  box-sizing: border-box;
+}
+
+/* Réduire les espacements entre les éléments */
+.receipt-header,
+.receipt-title-section,
+.student-info-grid,
+.student-details,
+.payment-details,
+.receipt-footer {
+  margin-bottom: 0.2cm;
+}
+
+/* Compresser les lignes du tableau */
+.payment-table {
+  border-spacing: 0;
+}
+
+.table-cell {
+  padding: 0.08cm 0.15cm;
+}
+
+/* Ajustements finaux pour tenir sur une page */
+@media print {
+  .receipt-container {
+    transform: scale(0.98);
+    transform-origin: top left;
+  }
+}
+
+
+
+/* Styles pour la section du nouveau paiement */
+.new-payment-details {
+  background: #f8f9fa;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.new-payment-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.payment-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 4px;
+  border-left: 4px solid #3b82f6;
+}
+
+.payment-item span:first-child {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.payment-item span:last-child {
+  font-weight: 600;
+  color: #1f2937;
+  font-family: 'Courier New', monospace;
+}
+
+.payment-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #1f2937;
+  color: white;
+  border-radius: 4px;
+  margin-top: 8px;
+  font-weight: 700;
+}
+
+.payment-total span:last-child {
+  font-family: 'Courier New', monospace;
+}

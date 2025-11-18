@@ -1,0 +1,11 @@
+node_modules/
+frontend/node_modules/
+server/node_modules/
+dist/
+frontend/dist/
+server/dist/
+.DS_Store
+.env
+*.log
+yarn.lock
+.history

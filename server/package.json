@@ -1,0 +1,56 @@
+{
+  "name": "paiegracededieu",
+  "version": "1.0.0",
+  "description": "Application de gestion de scolarité - Groupe Scolaire Bilingue La Grâce de Dieu",
+  "author": "Dassi",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build:react": "cd ../frontend && npm run build",
+    "build": "npm run build:react && cross-env NODE_ENV=production electron-builder",
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "rebuild": "electron-rebuild -f -w better-sqlite3"
+
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.5.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^23.6.0",
+    "electron-rebuild": "^3.2.9",
+    "cross-env": "^7.0.3",
+    "electron": "^22.3.24"
+
+  },
+  "build": {
+    "appId": "com.dascom.paiegracededieu",
+    "productName": "PaieGrâceDeDieu",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "../frontend/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../frontend/dist",
+        "to": "app"
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/icon.png"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "src/assets/icon.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/icon.png"
+    }
+  }
+}
