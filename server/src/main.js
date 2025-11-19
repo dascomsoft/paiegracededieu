@@ -1,34 +1,74 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const Database = require('./database/db');
+
+let mainWindow;
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+  mainWindow = new BrowserWindow({
+    width: 1400,
+    height: 900,
+    minWidth: 1200,
+    minHeight: 800,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js'),
       webSecurity: false
-    }
+    },
+    icon: path.join(__dirname, '../assets/icon.png'),
+    title: 'Gestion Scolarité - Groupe Scolaire Bilingue La Grâce De Dieu',
+    show: false
   });
 
-  // CHARGE le fichier React COMPILÉ
-  mainWindow.loadFile('../../dist/index.html');
-  
-  // Ouvre les DevTools pour debug
-  mainWindow.webContents.openDevTools();
+  // Mode développement
+  if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
+    mainWindow.loadURL('http://localhost:5173');
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
+  } else {
+    // Mode production - CHEMIN CORRECT
+    mainWindow.loadFile(path.join(__dirname, '../../dist/index.html'));
+  }
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
+
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
+  if (process.platform !== 'darwin') app.quit();
+});
+
+// ========== IPC & DB ==========
+const db = new Database();
+
+ipcMain.handle('database-query', async (event, { method, params }) => {
+  try {
+    const result = await db[method](...params);
+    return { success: true, result };
+  } catch (error) {
+    return { success: false, error: error.message };
   }
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+ipcMain.handle('get-app-version', () => app.getVersion());
+
+ipcMain.handle('minimize-window', () => mainWindow?.minimize());
+ipcMain.handle('maximize-window', () => {
+  if (mainWindow) {
+    mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
   }
-});
+});  
+ipcMain.handle('close-window', () => mainWindow?.close());

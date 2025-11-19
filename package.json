@@ -14,14 +14,14 @@
     "pack:win": "cd server && electron-builder --win --x64"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
     "concurrently": "^8.2.2",
     "electron": "28",
     "electron-builder": "^26.0.12",
-    "vite": "^5.0.0",
-    "@vitejs/plugin-react": "^4.0.0",
+    "lucide-react": "^0.552.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "lucide-react": "^0.552.0"
+    "vite": "^5.0.0"
   },
   "build": {
     "appId": "com.dascom.paiegracededieu",
