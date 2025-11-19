@@ -14,7 +14,8 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: false
+      webSecurity: false,
+      enableRemoteModule: false
     },
     icon: path.join(__dirname, '../assets/icon.png'),
     title: 'Gestion Scolarité - Groupe Scolaire Bilingue La Grâce De Dieu',
@@ -26,10 +27,12 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   } else {
-    // Mode production - CHEMIN ABSOLU GARANTI
+    // Mode production - CHEMIN CORRECT
     const prodPath = path.join(__dirname, '../../dist/index.html');
     console.log('Loading production file:', prodPath);
     mainWindow.loadFile(prodPath);
+    // Ouvrir DevTools pour debug en production
+    mainWindow.webContents.openDevTools();
   }
 
   mainWindow.once('ready-to-show', () => {

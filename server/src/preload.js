@@ -13,11 +13,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     minimize: () => ipcRenderer.invoke('minimize-window'),
     maximize: () => ipcRenderer.invoke('maximize-window'),
     close: () => ipcRenderer.invoke('close-window')
-  },
-  
-  // Méthodes pour le système de fichiers (pour les sauvegardes)
-  fs: {
-    showSaveDialog: (options) => ipcRenderer.invoke('show-save-dialog', options),
-    showOpenDialog: (options) => ipcRenderer.invoke('show-open-dialog', options)
   }
 });
+
+console.log('Preload script loaded successfully');
