@@ -1,17 +1,15 @@
 {
   "name": "paiegracededieu",
   "version": "1.0.0",
-  "description": "Application de gestion de scolarité avec React, Tailwind, Electron et SQLite",
+  "description": "Application de gestion de scolarité avec React, Tailwind, Vite",
   "author": "Dascom",
   "license": "ISC",
   "private": true,
-  "main": "server/src/main.js",
   "scripts": {
     "install:all": "npm install && cd server && npm install",
     "dev": "concurrently \"vite\" \"cd server && npm run dev\"",
-    "build": "npx vite build && cd server && npm run build",
-    "start": "cd server && electron .",
-    "pack:win": "cd server && electron-builder --win --x64"
+    "build": "vite build",
+    "start": "cd server && electron ."
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.0",
@@ -22,21 +20,5 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "vite": "^5.0.0"
-  },
-  "build": {
-    "appId": "com.dascom.paiegracededieu",
-    "productName": "PaieGraceDeDieu",
-    "files": [
-      "dist/**/*",
-      "server/**/*",
-      "package.json"
-    ],
-    "directories": {
-      "output": "dist"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "assets/icon.png"
-    }
   }
 }

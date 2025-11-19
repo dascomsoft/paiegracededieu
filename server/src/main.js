@@ -1,6 +1,5 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
-const fs = require('fs');
 const Database = require('./database/db');
 
 let mainWindow;
@@ -15,34 +14,21 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: false,
-      enableRemoteModule: false
+      webSecurity: false
     },
     icon: path.join(__dirname, '../assets/icon.png'),
     title: 'Gestion Scolarité - Groupe Scolaire Bilingue La Grâce De Dieu',
     show: false
   });
 
-  // Mode développement
-  if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
+  if (process.env.NODE_ENV === 'development') {
+    // Mode développement
     mainWindow.loadURL('http://localhost:5173');
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
-  } else {
-    // Mode production - AVEC DEBUG
-    const prodPath = path.join(__dirname, '../../dist/index.html');
-    console.log('📁 Production path:', prodPath);
-    console.log('✅ File exists:', fs.existsSync(prodPath));
-    
-    if (fs.existsSync(prodPath)) {
-      const content = fs.readFileSync(prodPath, 'utf8');
-      console.log('📄 File content (first 500 chars):', content.substring(0, 500));
-      mainWindow.loadFile(prodPath);
-    } else {
-      console.log('❌ ERROR: index.html not found!');
-      mainWindow.loadURL('data:text/html,<h1>ERROR: index.html not found at ' + prodPath + '</h1>');
-    }
-    
     mainWindow.webContents.openDevTools();
+  } else {
+    // Mode PRODUCTION – CHEMIN 100% CORRECT
+    const indexPath = path.join(process.resourcesPath, 'dist/index.html');
+    mainWindow.loadFile(indexPath);
   }
 
   mainWindow.once('ready-to-show', () => {
@@ -69,6 +55,7 @@ app.on('window-all-closed', () => {
 // ========== IPC & DB ==========
 const db = new Database();
 
+// Requêtes base de données
 ipcMain.handle('database-query', async (event, { method, params }) => {
   try {
     const result = await db[method](...params);
@@ -78,12 +65,27 @@ ipcMain.handle('database-query', async (event, { method, params }) => {
   }
 });
 
+// Application
 ipcMain.handle('get-app-version', () => app.getVersion());
 
+// Contrôles fenêtre
 ipcMain.handle('minimize-window', () => mainWindow?.minimize());
+
 ipcMain.handle('maximize-window', () => {
   if (mainWindow) {
     mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
   }
-});  
+});
+
 ipcMain.handle('close-window', () => mainWindow?.close());
+
+// ========== DIALOGUES SYSTÈME ==========
+ipcMain.handle('show-save-dialog', async (event, options) => {
+  const result = await dialog.showSaveDialog(mainWindow, options);
+  return result;
+});
+
+ipcMain.handle('show-open-dialog', async (event, options) => {
+  const result = await dialog.showOpenDialog(mainWindow, options);
+  return result;
+});

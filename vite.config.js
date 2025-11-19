@@ -3,9 +3,14 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+
+  base: './',
+
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    sourcemap: false, // IMPORTANT pour éviter la "page blanche"
+
     rollupOptions: {
       output: {
         assetFileNames: 'assets/[name]-[hash][extname]',
@@ -14,8 +19,15 @@ export default defineConfig({
       }
     }
   },
-  base: './',
+
   server: {
-    port: 5173
+    port: 5173,
+    strictPort: true // empêche les décalages de port
+  },
+
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
   }
 })
