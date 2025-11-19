@@ -28,11 +28,11 @@
     },
     "files": [
       "src/**/*",
-      "../../dist/**/*"
+      "../dist/**/*"
     ],
     "extraResources": [
       {
-        "from": "../../dist",
+        "from": "../dist",
         "to": "app"
       }
     ],
