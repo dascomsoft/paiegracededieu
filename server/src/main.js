@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const Database = require('./database/db');
 
 let mainWindow;
@@ -27,11 +28,20 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   } else {
-    // Mode production - CHEMIN CORRECT
+    // Mode production - AVEC DEBUG
     const prodPath = path.join(__dirname, '../../dist/index.html');
-    console.log('Loading production file:', prodPath);
-    mainWindow.loadFile(prodPath);
-    // Ouvrir DevTools pour debug en production
+    console.log('📁 Production path:', prodPath);
+    console.log('✅ File exists:', fs.existsSync(prodPath));
+    
+    if (fs.existsSync(prodPath)) {
+      const content = fs.readFileSync(prodPath, 'utf8');
+      console.log('📄 File content (first 500 chars):', content.substring(0, 500));
+      mainWindow.loadFile(prodPath);
+    } else {
+      console.log('❌ ERROR: index.html not found!');
+      mainWindow.loadURL('data:text/html,<h1>ERROR: index.html not found at ' + prodPath + '</h1>');
+    }
+    
     mainWindow.webContents.openDevTools();
   }
 
