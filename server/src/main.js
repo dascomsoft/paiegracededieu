@@ -26,8 +26,10 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   } else {
-    // Mode production - CHEMIN CORRECT
-    mainWindow.loadFile(path.join(__dirname, '../../dist/index.html'));
+    // Mode production - CHEMIN ABSOLU GARANTI
+    const prodPath = path.join(__dirname, '../../dist/index.html');
+    console.log('Loading production file:', prodPath);
+    mainWindow.loadFile(prodPath);
   }
 
   mainWindow.once('ready-to-show', () => {
