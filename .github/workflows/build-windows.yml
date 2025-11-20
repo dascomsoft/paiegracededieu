@@ -27,8 +27,8 @@ jobs:
         npm install
       
     - name: Build React app
-      run: npm run build
-      
+      run: npx vite build
+        
     - name: Build Electron Windows installer
       run: |
         cd server
@@ -38,4 +38,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: PaieGraceDeDieu-Windows
-        path: server/dist/*.exe
+        path: release/*.exe  # ← CHANGÉ ICI
