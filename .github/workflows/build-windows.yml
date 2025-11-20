@@ -8,34 +8,50 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-        
+
     - name: Install dependencies
       run: npm install
-      
+
     - name: Install Server dependencies
       run: |
         cd server
         npm install
-      
+
     - name: Build React app
       run: npx vite build
-        
+
     - name: Build Electron Windows installer
       run: |
         cd server
         npm run pack:win
-        
+
     - name: Upload Windows Installer
       uses: actions/upload-artifact@v4
       with:
         name: PaieGraceDeDieu-Windows
-        path: release/*.exe  # ← CHANGÉ ICI
+        path: release/*.exe
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: release/*.exe
+        body: |
+          ## 🚀 Nouvelle version de PaieGrâceDeDieu
+          
+          **Installateur Windows**
+          
+          ### 📦 Changements :
+          - Correction des workflows CI/CD
+          - Build automatique des releases
+        draft: false
+        prerelease: false
