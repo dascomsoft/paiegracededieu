@@ -39,19 +39,3 @@ jobs:
       with:
         name: PaieGraceDeDieu-Windows
         path: release/*.exe
-
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: release/*.exe
-        body: |
-          ## 🚀 Nouvelle version de PaieGrâceDeDieu
-          
-          **Installateur Windows**
-          
-          ### 📦 Changements :
-          - Correction des workflows CI/CD
-          - Build automatique des releases
-        draft: false
-        prerelease: false
